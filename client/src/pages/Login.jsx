@@ -7,6 +7,8 @@ const Login = () => {
     password: "",
   });
 
+  console.log("form", form);
+
   const handleChange = async (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -29,9 +31,20 @@ const Login = () => {
   };
   return (
     <form onSubmit={handleSubmit}>
-      <h1>Login</h1>
-      <input type="email" placeholder="Email" onChange={handleChange} />
-      <input type="password" placeholder="Password" onChange={handleChange} />
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      <h1 className="text-red-500">Login</h1>
+      <input
+        name="email"
+        type="email"
+        placeholder="Email"
+        onChange={handleChange}
+      />
+      <input
+        name="password"
+        type="password"
+        placeholder="Password"
+        onChange={handleChange}
+      />
       <button type="submit">Login</button>
     </form>
   );

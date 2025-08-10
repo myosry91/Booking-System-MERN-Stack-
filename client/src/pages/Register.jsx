@@ -8,7 +8,10 @@ const Register = () => {
     password: "",
   });
 
+  console.log("form", form);
+
   const handleChange = (e) => {
+    console.log([e.target.name]);
     setForm({
       ...form,
       [e.target.name]: e.target.value,
@@ -24,6 +27,7 @@ const Register = () => {
         "http://localhost:5000/api/auth/register",
         form
       );
+      console.log("res.data", res.data);
       localStorage.setItem("token", res.data.token);
 
       alert("Registration successful!");
@@ -34,9 +38,24 @@ const Register = () => {
   return (
     <form onSubmit={handleSubmit}>
       <h1>Register</h1>
-      <input type="name" placeholder="Username" onChange={handleChange} />
-      <input type="email" placeholder="Email" onChange={handleChange} />
-      <input type="password" placeholder="Password" onChange={handleChange} />
+      <input
+        name="name"
+        type="name"
+        placeholder="Username"
+        onChange={handleChange}
+      />
+      <input
+        name="email"
+        type="email"
+        placeholder="Email"
+        onChange={handleChange}
+      />
+      <input
+        name="password"
+        type="password"
+        placeholder="Password"
+        onChange={handleChange}
+      />
       <button type="submit">Register</button>
     </form>
   );

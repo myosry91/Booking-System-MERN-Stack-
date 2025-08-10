@@ -8,8 +8,7 @@ export const register = async (req, res) => {
   try {
     // Check if user already exists
     const exists = await User.findOne({ email });
-    if (exists) return;
-    res.status(400).json({ message: "User already exists" });
+    if (exists) return res.status(400).json({ message: "User already exists" });
 
     const hashed = await bcrypt.hash(password, 10);
 
@@ -19,6 +18,7 @@ export const register = async (req, res) => {
       password: hashed,
     });
 
+    console.log("user", user);
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
@@ -31,7 +31,7 @@ export const register = async (req, res) => {
       user: { id: user._id, name: user.name, email: user.email },
     });
   } catch (err) {
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ message: "Something went wrong: " + err });
   }
 };
 
@@ -41,7 +41,7 @@ export const login = async (req, res) => {
   try {
     // Check if user exists
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Invalid credentials" });
+    if (!user) return res.status(400).json({ message: "No user founded" });
 
     // Check password
     const match = await bcrypt.compare(password, user.password);
